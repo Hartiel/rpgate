@@ -1,3 +1,5 @@
+from http.client import HTTPException
+from sqlite3 import IntegrityError
 from typing import Optional
 from sqlalchemy.orm import Session
 from app.models.user import User
@@ -26,9 +28,15 @@ class AuthRepository:
             name=name,
             username=username,
         )
-        
-        self.db.add(user)
-        self.db.commit()
-        self.db.refresh(user)
+        try:
+            self.db.add(user)
+            self.db.commit()
+            self.db.refresh(user)
 
-        return user
+            return user
+        except IntegrityError:
+            self.db.rollback()
+            raise HTTPException(
+                status_code=400,
+                detail="User with this email or username already exists."
+            )

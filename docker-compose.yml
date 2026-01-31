@@ -3,11 +3,12 @@ services:
     build: ./backend
     container_name: rpgate_backend
     volumes:
-      - ./backend:/app
+      # - ./backend:/app
+      - ./:/workspace
+    working_dir: /workspace/backend
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=${DATABASE_URL}
       - SECRET_KEY=${SECRET_KEY}
       - ALGORITHM=${ALGORITHM}
       - DATABASE_URL=${DATABASE_URL}
@@ -24,6 +25,7 @@ services:
       - "80:5173"
     environment:
       - VITE_API_URL=${VITE_API_URL}
+      - VITE_API_VERSION=${VITE_API_VERSION}
     stdin_open: true
     tty: true
 

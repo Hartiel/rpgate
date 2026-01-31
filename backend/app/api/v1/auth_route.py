@@ -9,7 +9,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post('/register', response_model=TokenResponse)
 def register(data: RegisterRequest, db: Session = Depends(get_db)) -> TokenResponse:
-    return(register_user(data, db))
+    return(register_user(db, data))
 
 @router.post("/login", response_model=TokenResponse)
 def login(data: LoginRequest, db: Session = Depends(get_db)) -> TokenResponse:
