@@ -1,10 +1,8 @@
 {
-  "name": "RPGate DevContainer",
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ],
+  "name": "RPGate Backend Dev",
+  "dockerComposeFile": ["../docker-compose.yml"],
   "service": "backend",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/app",
   "customizations": {
     "vscode": {
       "settings": {
@@ -14,10 +12,9 @@
       "extensions": [
         "ms-python.python",
         "ms-azuretools.vscode-docker",
-        "ms-python.vscode-pylance",
-        "vue.volar"
+        "ms-python.vscode-pylance"
       ]
     }
   },
-  "remoteUser": "root"
+  "postCreateCommand": "pip install -r requirements.txt"
 }

@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, UUID4
 
 
 class RegisterRequest(BaseModel):
@@ -15,3 +15,11 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+class AuthUserResponse(BaseModel):
+    id: UUID4
+    email: EmailStr
+    username: str = Field(min_length=3, max_length=16)
+    name: Optional[str] = Field(default=None, max_length=100)
+    avatar_url: Optional[str]
+    bio: Optional[str]
