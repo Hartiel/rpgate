@@ -17,6 +17,7 @@ We have implemented a **Polymorphic Database Architecture** that supports:
 * **Database:** PostgreSQL (with JSONB support)
 * **Environment:** Laravel Sail (Docker)
 * **Architecture:** Polymorphic Relationships & UUID Primary Keys.
+* **Decisions:** Actions, FormRequests, Policies and Concerns for Single Responsabilities
 
 ## 📐 Database Schema Overview
 

@@ -7,6 +7,8 @@ use App\Concerns\ProfileValidationRules;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Support\Facades\Enum;
+use App\Enums\UserRole;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -28,6 +30,9 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
+            'username' => $input['username'],
+            'role' => UserRole::USER,
+            'is_active' => true,
         ]);
     }
 }

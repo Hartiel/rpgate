@@ -9,11 +9,22 @@
             @csrf
             <!-- Name -->
             <flux:input
+                name="username"
+                :label="__('Username')"
+                :value="old('username')"
+                type="text"
+                required
+                autofocus
+                autocomplete="username"
+                :placeholder="__('Username')"
+            />
+
+            <!-- Name -->
+            <flux:input
                 name="name"
                 :label="__('Name')"
                 :value="old('name')"
                 type="text"
-                required
                 autofocus
                 autocomplete="name"
                 :placeholder="__('Full name')"
@@ -53,7 +64,7 @@
             />
 
             <div class="flex items-center justify-end">
-                <flux:button type="submit" variant="primary" class="w-full" data-test="register-user-button">
+                <flux:button type="submit" variant="primary" color="orange" class="w-full" data-test="register-user-button">
                     {{ __('Create account') }}
                 </flux:button>
             </div>

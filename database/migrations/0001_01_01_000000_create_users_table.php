@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->string('photo_url')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->string('role')->default('user');
             $table->timestamps();
         });
 
