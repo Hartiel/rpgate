@@ -21,13 +21,13 @@ jobs:
       - name: Setup PHP environment
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.5'
           extensions: mbstring, json, dom, curl, libxml
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       # Cache do Composer
       - name: Cache Composer dependencies
@@ -80,13 +80,13 @@ jobs:
       - name: Setup PHP environment
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.5'
           extensions: mbstring, json, dom, curl, libxml, bcmath, pdo, mysql, pdo_mysql
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Cache Composer dependencies
         uses: actions/cache@v4
