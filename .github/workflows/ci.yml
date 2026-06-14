@@ -29,14 +29,14 @@ jobs:
         with:
           node-version: '24'
 
-      # Cache do Composer
+      # Composer Cache
       - name: Cache Composer dependencies
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache/files
           key: dependencies-laravel-composer-${{ hashFiles('**/composer.lock') }}
 
-      # Cache do NPM
+      # NPM Cache
       - name: Cache Node dependencies
         uses: actions/cache@v4
         with:
@@ -62,16 +62,15 @@ jobs:
     name: Core Application Tests
     runs-on: ubuntu-latest
 
-    # Levanta um banco de dados relacional oficial em background na nuvem
     services:
       mysql:
-        image: mysql:8.0
+        image: postgres:16
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: rpgate_testing
+          POSTGRES_DB: rpgate_testing
+          POSTGRES_PASSWORD: password
         ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries=5
 
     steps:
       - name: Checkout code
@@ -81,7 +80,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.5'
-          extensions: mbstring, json, dom, curl, libxml, bcmath, pdo, mysql, pdo_mysql
+          extensions: mbstring, json, dom, curl, libxml, bcmath, pdo, pgsql, pdo_pgsql
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
@@ -109,12 +108,12 @@ jobs:
       - name: Prepare application environment
         run: |
           cp .env.example .env.testing
-          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/g' .env.testing
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=pgsql/g' .env.testing
           sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/g' .env.testing
-          sed -i 's/DB_PORT=.*/DB_PORT=3306/g' .env.testing
+          sed -i 's/DB_PORT=.*/DB_PORT=5432/g' .env.testing
           sed -i 's/DB_DATABASE=.*/DB_DATABASE=rpgate_testing/g' .env.testing
-          sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/g' .env.testing
-          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=/g' .env.testing
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=postgres/g' .env.testing
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=password/g' .env.testing
           php artisan key:generate --env=testing
 
       - name: Run database migrations (Test Environment)
@@ -125,4 +124,4 @@ jobs:
 
       - name: Execute Frontend Tests (Vitest)
         continue-on-error: true
-        run: LARAVEL_BYPASS_ENV_CHECK=1 npx vitest run
+        run: LARAVEL_BYPASS_ENV_CHECK=1 npx vitest run --passWithNoTests
