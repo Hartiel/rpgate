@@ -28,10 +28,10 @@ test('new user can register by api', function () {
 
     // Validate ULID, Discriminator and Hash
     $user = User::where('email', 'usertest@rpgate.com')->first();
-    
+
     expect($user->id)->toBeString()->toHaveLength(26)
-    ->and($user->discriminator)->toBeInt()->toBeBetween(1000, 9999)
-    ->and(Hash::check('Password!123', $user->password))->toBeTrue();
+        ->and($user->discriminator)->toBeInt()->toBeBetween(1000, 9999)
+        ->and(Hash::check('Password!123', $user->password))->toBeTrue();
 });
 
 test('Fail register if email in use', function () {

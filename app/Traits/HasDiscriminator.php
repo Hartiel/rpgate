@@ -18,7 +18,7 @@ trait HasDiscriminator
     {
         static::creating(function (Model $model) {
             // Generate if not passed manually
-            if (empty($model->discriminator) && !empty($model->username)) {
+            if (empty($model->discriminator) && ! empty($model->username)) {
                 $model->discriminator = static::generateUniqueDiscriminator($model->username, $model->getTable());
             }
         });

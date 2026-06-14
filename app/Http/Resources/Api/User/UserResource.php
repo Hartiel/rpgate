@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Api\User;
 
+use App\Enums\ThemeEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Enums\ThemeEnum;
 
 class UserResource extends JsonResource
 {

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
 use App\Enums\ThemeEnum;
+use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
 test('authenticated user can fetch their profile via api', function () {
@@ -22,7 +22,7 @@ test('authenticated user can fetch their profile via api', function () {
 test('updating user settings updates database and clears redis cache', function () {
     // Arrange: Prepare user settings data
     $user = User::factory()->create([
-        'settings' => ['theme' => ThemeEnum::DARK->value, 'compact_mode' => false]
+        'settings' => ['theme' => ThemeEnum::DARK->value, 'compact_mode' => false],
     ]);
 
     // Act: Send GET request to the api/user endpoint and expect Cache
@@ -32,7 +32,7 @@ test('updating user settings updates database and clears redis cache', function 
     // Envia payload from FormRequest/DTO to update theme
     $payload = [
         'theme' => ThemeEnum::LIGHT->value,
-        'compact_mode' => true
+        'compact_mode' => true,
     ];
 
     $response = $this->putJson('/api/user/settings', $payload);
@@ -43,7 +43,7 @@ test('updating user settings updates database and clears redis cache', function 
 
     $this->assertDatabaseHas('users', [
         'id' => $user->id,
-        'settings->theme' => ThemeEnum::LIGHT->value
+        'settings->theme' => ThemeEnum::LIGHT->value,
     ]);
 
     expect(Cache::has("user:{$user->id}"))->toBeFalse();

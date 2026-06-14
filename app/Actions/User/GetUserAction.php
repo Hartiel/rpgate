@@ -18,7 +18,7 @@ class GetUserAction
     {
         $attributes = Cache::remember("user:{$userId}", now()->addDay(), function () use ($userId) {
             $user = $this->databaseAction->execute($userId);
-            
+
             return $user->getAttributes();
         });
 

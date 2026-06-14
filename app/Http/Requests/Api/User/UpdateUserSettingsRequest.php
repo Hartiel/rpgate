@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Api\User;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Enums\ThemeEnum;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
 class UpdateUserSettingsRequest extends FormRequest

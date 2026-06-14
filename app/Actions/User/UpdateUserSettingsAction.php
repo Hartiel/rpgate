@@ -2,11 +2,9 @@
 
 namespace App\Actions\User;
 
+use App\DTOs\Api\User\UpdateUserSettingsDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
-use App\DTOs\Api\User\UpdateUserSettingsDTO;
-use Illuminate\Validation\Rules\Enum;
-use App\Enums\ThemeEnum;
 
 class UpdateUserSettingsAction
 {
@@ -21,10 +19,11 @@ class UpdateUserSettingsAction
             'settings' => [
                 'theme' => $dto->theme->value,
                 'compact_mode' => $dto->compactMode,
-            ]
+            ],
         ]);
 
         Cache::forget("user:{$userId}");
+
         return $user;
     }
 }

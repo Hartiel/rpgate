@@ -2,9 +2,8 @@
 
 namespace App\DTOs\Api\User;
 
-use App\Http\Requests\Api\User\UpdateUserSettingsRequest;
-use Illuminate\Validation\Rules\Enum;
 use App\Enums\ThemeEnum;
+use App\Http\Requests\Api\User\UpdateUserSettingsRequest;
 
 class UpdateUserSettingsDTO
 {
