@@ -1,0 +1,127 @@
+name: CI (Continuous Integration)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # -------------------------------------------------------------
+  # JOB 1: QUALITY & LINTING
+  # -------------------------------------------------------------
+  code-quality:
+    name: Code Quality & Typing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, json, dom, curl, libxml
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Cache do Composer
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-laravel-composer-${{ hashFiles('**/composer.lock') }}
+
+      # Cache do NPM
+      - name: Cache Node dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: dependencies-vue-npm-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Check PHP Code Style (Laravel Pint)
+        run: ./vendor/bin/pint --test
+
+      - name: Check TypeScript & Vue compilation
+        run: npm run build -- --watch=false || npx vue-tsc --noEmit
+
+  # -------------------------------------------------------------
+  # JOB 2: AUTOMATED TESTS
+  # -------------------------------------------------------------
+  automated-tests:
+    name: Core Application Tests
+    runs-on: ubuntu-latest
+
+    # Levanta um banco de dados relacional oficial em background na nuvem
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: rpgate_testing
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, json, dom, curl, libxml, bcmath, pdo, mysql, pdo_mysql
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-laravel-composer-${{ hashFiles('**/composer.lock') }}
+
+      - name: Cache Node dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: dependencies-vue-npm-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Prepare application environment
+        run: |
+          cp .env.example .env.testing
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/g' .env.testing
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/g' .env.testing
+          sed -i 's/DB_PORT=.*/DB_PORT=3306/g' .env.testing
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=rpgate_testing/g' .env.testing
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/g' .env.testing
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=/g' .env.testing
+          php artisan key:generate --env=testing
+
+      - name: Run database migrations (Test Environment)
+        run: php artisan migrate --force --env=testing
+
+      - name: Execute Backend Tests (Pest PHP)
+        run: ./vendor/bin/pest
+
+      - name: Execute Frontend Tests (Vitest)
+        run: npx vitest run
