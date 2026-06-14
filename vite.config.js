@@ -36,4 +36,12 @@ export default defineConfig({
             '@': path.resolve(__dirname, './resources/js'),
         },
     },
+    test: {
+        exclude: [
+            '**/node_modules/**',
+            '**/dist/**',
+            '**/e2e/**', // 👈 Bloqueia o Vitest de ler os specs do Playwright
+        ],
+        environment: 'jsdom',
+    },
 });
