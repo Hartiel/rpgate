@@ -1,0 +1,148 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.ts';
+@source "../**/*.vue";
+
+@theme {
+    /* RPGate Custom Theme Elements (Defaults / Dark Mode) */
+    --color-rpgate-bg: #0A0A0A;
+    --color-rpgate-footer: #1A120B;
+    --color-rpgate-accent: #C5A065;
+    --color-rpgate-cta: #E6891A;
+    --color-rpgate-text: #DEDEDE;
+    --color-rpgate-header: #FFFFFF;
+
+    --color-rpgate-input-bg: #151515;
+    --color-rpgate-input-border: rgba(255, 255, 255, 0.1);
+    --color-rpgate-card-bg: rgba(255, 255, 255, 0.05);
+    --color-rpgate-card-border: transparent; /* Transparent border to hide separating lines */
+
+    /* Material Design theme colors (Defaults / Dark Mode) */
+    --color-background: #131313;
+    --color-on-background: #e5e2e1;
+    --color-primary: #ffb77d;
+    --color-on-primary: #4d2600;
+    --color-primary-container: #ff8c00;
+    --color-on-primary-container: #623200;
+    --color-secondary: #fdb881;
+    --color-on-secondary: #4d2600;
+    --color-secondary-container: #6a3b0f;
+    --color-on-secondary-container: #e9a771;
+    --color-tertiary: #85cfff;
+    --color-on-tertiary: #00344c;
+    --color-tertiary-container: #00b5fc;
+    --color-on-tertiary-container: #004360;
+
+    --color-surface: #131313;
+    --color-on-surface: #e5e2e1;
+    --color-surface-variant: #353534;
+    --color-on-surface-variant: #ddc1ae;
+    --color-outline: transparent; /* Transparent border to hide separating lines */
+    --color-outline-variant: transparent; /* Transparent border to hide separating lines */
+    --color-surface-container: #201f1f;
+    --color-surface-container-lowest: #0e0e0e;
+    --color-surface-container-highest: #353534;
+    --color-surface-container-high: #2a2a2a;
+    --color-surface-container-low: #1c1b1b;
+    --color-surface-bright: #393939;
+    --color-surface-dim: #131313;
+
+    --color-error: #ffb4ab;
+    --color-on-error: #690005;
+    --color-error-container: #93000a;
+    --color-on-error-container: #ffdad6;
+
+    --font-serif: "Cinzel", serif;
+    --font-sans: "Inter", sans-serif;
+
+    /* Fixed variant properties */
+    --color-on-tertiary-fixed-variant: #004c6c;
+    --color-tertiary-fixed-dim: #85cfff;
+    --color-secondary-fixed: #ffdcc3;
+    --color-on-secondary-fixed-variant: #6a3b0f;
+    --color-secondary-fixed-dim: #fdb881;
+    --color-tertiary-fixed: #c7e7ff;
+    --color-on-secondary-fixed: #2f1500;
+    --color-inverse-surface: #e5e2e1;
+    --color-on-tertiary-fixed: #001e2e;
+    --color-inverse-primary: #904d00;
+    --color-primary-fixed: #ffdcc3;
+    --color-on-primary-fixed-variant: #6e3900;
+    --color-inverse-on-surface: #313030;
+    --color-primary-fixed-dim: #ffb77d;
+    --color-surface-tint: #ffb77d;
+    --color-on-primary-fixed: #2f1500;
+
+    /* Custom Fonts for QuestForge style */
+    --font-headline: "Newsreader", serif;
+    --font-body: "Manrope", sans-serif;
+    --font-label: "Manrope", sans-serif;
+}
+
+/* Light Theme Overrides (Cascades on top of Tailwind native variables) */
+.light, :root.light {
+    --color-rpgate-bg: #FAF6EE;
+    --color-rpgate-footer: #EFE5D3;
+    --color-rpgate-accent: #8E652B;
+    --color-rpgate-cta: #D36C00;
+    --color-rpgate-text: #3E3529;
+    --color-rpgate-header: #1E150B;
+
+    --color-rpgate-input-bg: #FFFFFF;
+    --color-rpgate-input-border: rgba(0, 0, 0, 0.15);
+    --color-rpgate-card-bg: rgba(0, 0, 0, 0.03);
+    --color-rpgate-card-border: transparent; /* Keep transparent in light mode */
+
+    --color-background: #FAF6EE;
+    --color-on-background: #3E3529;
+    --color-primary: #D36C00;
+    --color-on-primary: #FFFFFF;
+    --color-primary-container: #FFE5D3;
+    --color-on-primary-container: #472100;
+    --color-secondary: #A05315;
+    --color-on-secondary: #FFFFFF;
+    --color-secondary-container: #FFDCC3;
+    --color-on-secondary-container: #341700;
+    --color-tertiary: #006696;
+    --color-on-tertiary: #FFFFFF;
+    --color-tertiary-container: #CBE6FF;
+    --color-on-tertiary-container: #001E31;
+
+    --color-surface: #FCFAF6;
+    --color-on-surface: #3E3529;
+    --color-surface-variant: #EDE6DC;
+    --color-on-surface-variant: #6E5C4E;
+    --color-outline: transparent; /* Keep transparent in light mode */
+    --color-outline-variant: transparent; /* Keep transparent in light mode */
+    --color-surface-container: #F1EAE0;
+    --color-surface-container-lowest: #FFFFFF;
+    --color-surface-container-highest: #E8DFD4;
+    --color-surface-container-high: #EAE2D8;
+    --color-surface-container-low: #F6F0E6;
+    --color-surface-bright: #FFFFFF;
+    --color-surface-dim: #E1D9CD;
+
+    --color-error: #BA1A1A;
+    --color-on-error: #FFFFFF;
+    --color-error-container: #FFDAD6;
+    --color-on-error-container: #410002;
+}
+
+/* @apply Refactored Components for RPGate theme */
+@utility rpg-input {
+    @apply w-full bg-rpgate-input-bg border border-rpgate-input-border rounded px-4 py-3 text-rpgate-text focus:outline-none focus:border-rpgate-accent/50 focus:ring-1 focus:ring-rpgate-accent/50 transition-all placeholder:text-rpgate-text/30;
+}
+
+@utility rpg-card {
+    @apply bg-rpgate-card-bg border border-rpgate-card-border rounded-2xl shadow-inner transition-all duration-200;
+}
+
+@utility rpg-btn-primary {
+    @apply relative w-full overflow-hidden rounded bg-linear-to-r from-rpgate-cta to-[#c27010] py-4 font-serif text-sm font-bold tracking-[0.2em] text-rpgate-bg transition-all hover:shadow-[0_0_20px_rgba(230,137,26,0.4)];
+}
