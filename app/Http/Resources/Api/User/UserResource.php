@@ -20,7 +20,10 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'username' => $this->username,
+            'discriminator' => sprintf('%04d', $this->discriminator),
             'email' => $this->email,
+            'avatar' => 'https://i.pravatar.cc/150?u=' . $this->id,
             'settings' => [
                 'theme' => isset($settings['theme'])
                     ? $settings['theme'] instanceof ThemeEnum

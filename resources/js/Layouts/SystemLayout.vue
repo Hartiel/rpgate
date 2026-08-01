@@ -7,7 +7,8 @@ import {
     UserIcon,
     ScrollIcon,
     SettingsIcon,
-    LogOutIcon
+    LogOutIcon,
+    UsersIcon
 } from '@lucide/vue';
 
 const authStore = useAuthStore();
@@ -21,6 +22,7 @@ const handleLogout = async () => {
 
 const navItems = [
     { name: 'Lobby', icon: Wand2Icon, route: 'home' },
+    { name: 'Friends', icon: UsersIcon, route: 'friends' },
     { name: 'Profile', icon: UserIcon, route: 'profile' },
     { name: 'My Campaigns', icon: ScrollIcon, route: '#' },
 ];

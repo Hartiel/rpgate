@@ -34,9 +34,29 @@ Listed below are the ecosystem modules, highlighting what has already been conso
 - [x] Automated session state and preference synchronization via Global Subscribers on F5.
 
 ### ⚔️ Upcoming Expansions
-- [ ] **Social Module:** Self-referencing friendship system with status control and real-time private Chat via Laravel Reverb.
+- [x] **Social Module:** Self-referencing friendship system with status control (Actions, API, & Vue.js pages).
+- [ ] **Real-time Chat:** Real-time private Chat via Laravel Reverb.
 - [ ] **Lobbies Module:** Real-time room creation and management using presence channels.
 - [ ] **Character Sheets:** Polymorphic modeling of attributes and inventories for RPG systems.
+
+---
+
+## 🤝 Social Module API Endpoints
+
+All endpoints require authentication via Sanctum.
+
+| Method | Endpoint | Description | Parameters / Payload |
+|---|---|---|---|
+| `GET` | `/api/friends` | Retrieve the list of accepted guild members (friends). | None |
+| `GET` | `/api/friends/pending` | Retrieve both incoming (received) and outgoing (sent) pending friend requests. | None |
+| `POST` | `/api/friends/request` | Send a new friend request to another user. | `friend_id` (Required, must exist in users) |
+| `PATCH` | `/api/friends/{user}/accept` | Accept a pending friend request from another user. | `{user}` (Route parameter: sender user ULID) |
+| `DELETE` | `/api/friends/{user}/decline` | Decline a pending friend request from another user. | `{user}` (Route parameter: sender user ULID) |
+| `DELETE` | `/api/friends/{user}` | Unfriend an existing friend. | `{user}` (Route parameter: friend user ULID) |
+| `POST` | `/api/friends/{user}/block` | Block a user, regardless of friendship status. | `{user}` (Route parameter: user ULID to block) |
+| `DELETE` | `/api/friends/{user}/unblock` | Unblock a previously blocked user. | `{user}` (Route parameter: blocked user ULID) |
+| `GET` | `/api/users` | Search for players in the database by name/username. | `search` (Query parameter) |
+| `GET` | `/api/users/{user}` | Get a specific user profile along with current relationship status. | `{user}` (Route parameter) |
 
 ---
 
@@ -109,7 +129,11 @@ To boot up the frontend ecosystem and watch for changes:
 The stability and integrity of RPGate's business rules are continually validated through automated testing. To run the backend suite:
 
 ```bash
+# Backend Feature Tests (Pest)
 ./vendor/bin/sail test
+
+# End-to-End Tests (Playwright Headless)
+npx playwright test
 ```
 
 ## 📄 License

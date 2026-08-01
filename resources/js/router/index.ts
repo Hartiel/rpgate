@@ -7,6 +7,7 @@ import LoginPage from '@/Pages/Auth/LoginPage.vue';
 import HomePage from '@/Pages/System/HomePage.vue';
 import SettingsPage from '@/Pages/System/SettingsPage.vue';
 import ProfilePage from '@/Pages/System/ProfilePage.vue';
+import FriendsPage from '@/Pages/System/FriendsPage.vue';
 import { useAuthStore } from '@/stores/authStore';
 
 const router = createRouter({
@@ -58,10 +59,16 @@ const router = createRouter({
                     meta: { title: 'Settings - RPGate', requiresAuth: true }
                 },
                 {
-                    path: 'profile',
+                    path: 'profile/:id?',
                     name: 'profile',
                     component: ProfilePage,
                     meta: { title: 'Profile - RPGate', requiresAuth: true }
+                },
+                {
+                    path: 'friends',
+                    name: 'friends',
+                    component: FriendsPage,
+                    meta: { title: 'Friends - RPGate', requiresAuth: true }
                 }
             ],
         },
