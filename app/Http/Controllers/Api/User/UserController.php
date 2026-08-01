@@ -7,10 +7,10 @@ use App\Actions\User\UpdateUserSettingsAction;
 use App\DTOs\Api\User\UpdateUserSettingsDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\UpdateUserSettingsRequest;
-use App\Http\Resources\Api\User\UserResource;
 use App\Http\Resources\Api\Social\UserFriendResource;
-use App\Models\User;
+use App\Http\Resources\Api\User\UserResource;
 use App\Models\Friendship;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -85,7 +85,7 @@ class UserController extends Controller
     public function show(User $user, Request $request): UserFriendResource
     {
         $authUserId = $request->user()->id;
-        
+
         if ($authUserId !== $user->id) {
             $ids = [$authUserId, $user->id];
             sort($ids);

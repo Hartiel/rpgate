@@ -45,7 +45,7 @@ class FriendshipController extends Controller
             'data' => [
                 'received' => UserFriendResource::collection($received),
                 'sent' => UserFriendResource::collection($sent),
-            ]
+            ],
         ]);
     }
 

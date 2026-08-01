@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Actions\Social\AcceptFriendRequestAction;
 use App\Actions\Social\SendFriendRequestAction;
 use App\Actions\Social\UnfriendAction;
-use App\Models\Friendship;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
